@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 export const Header: React.FC = () => {
@@ -8,7 +7,7 @@ export const Header: React.FC = () => {
         Conversor de Texto em Voz
       </h1>
       <p className="mt-3 text-lg text-gray-400">
-        Dê vida ao seu texto com vozes masculinas realistas e naturais.
+        Transforme seus documentos Word em audiolivros com um clique.
       </p>
     </header>
   );
