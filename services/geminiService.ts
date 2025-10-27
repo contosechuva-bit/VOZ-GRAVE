@@ -8,7 +8,7 @@ export const generateSpeech = async (text: string, voiceName: string): Promise<s
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   // Adiciona a instrução de tom ao texto do usuário
-  const promptWithToneInstruction = `Fale em um tom neutro e tranquilo: ${text}`;
+  const promptWithToneInstruction = `Por favor, narre o texto a seguir em um ritmo calmo e natural, respeitando a pontuação. Faça pausas nas vírgulas e nos pontos. O texto é: ${text}`;
 
   try {
     const response = await ai.models.generateContent({
