@@ -2,21 +2,14 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { generateSpeech } from './services/geminiService';
 import { decode, decodeAudioData } from './utils/audioUtils';
-import type { VoiceOption } from './types';
-import { VoiceSelector } from './components/VoiceSelector';
 import { AudioPlayer } from './components/AudioPlayer';
 import { Header } from './components/Header';
 import { LoadingSpinner } from './components/LoadingSpinner';
 
-const voices: VoiceOption[] = [
-  { id: 'Puck', name: 'Voz Neutra' },
-  { id: 'Charon', name: 'Voz Grave' },
-  { id: 'Fenrir', name: 'Voz Calma' },
-];
+const voiceId = 'Charon'; // ID for 'Voz Grave'
 
 const App: React.FC = () => {
-  const [text, setText] = useState<string>('Olá! Bem-vindo ao conversor de texto em voz. Escreva algo aqui e escolha uma voz para começar.');
-  const [selectedVoice, setSelectedVoice] = useState<string>(voices[0].id);
+  const [text, setText] = useState<string>('Olá! Bem-vindo ao conversor de texto em voz. Escreva algo aqui para começar.');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +24,7 @@ const App: React.FC = () => {
     setAudioBuffer(null);
 
     try {
-      const audioData = await generateSpeech(text, selectedVoice);
+      const audioData = await generateSpeech(text, voiceId);
       
       if (!audioContextRef.current) {
          audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
@@ -50,7 +43,7 @@ const App: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [text, selectedVoice, isLoading]);
+  }, [text, isLoading]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 font-sans p-4 sm:p-6 lg:p-8 flex flex-col items-center">
@@ -69,15 +62,6 @@ const App: React.FC = () => {
                 placeholder="Digite o texto que você quer converter em áudio..."
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-gray-300 mb-3">Escolha uma Voz</h3>
-              <VoiceSelector
-                voices={voices}
-                selectedVoice={selectedVoice}
-                onSelectVoice={setSelectedVoice}
               />
             </div>
             
