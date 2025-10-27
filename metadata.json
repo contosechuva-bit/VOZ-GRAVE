@@ -1,0 +1,5 @@
+{
+  "name": "Conversor de Texto em Voz Realista (NOVO)",
+  "description": "Um aplicativo da web que converte texto em fala usando vozes masculinas realistas, calmas e neutras, alimentado pela API Gemini.",
+  "requestFramePermissions": []
+}
