@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Modality } from "@google/genai";
 
 export const generateSpeech = async (text: string, voiceName: string): Promise<string> => {
@@ -8,10 +7,13 @@ export const generateSpeech = async (text: string, voiceName: string): Promise<s
 
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
+  // Adiciona a instrução de tom ao texto do usuário
+  const promptWithToneInstruction = `Fale em um tom neutro e tranquilo: ${text}`;
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-preview-tts",
-      contents: [{ parts: [{ text: text }] }],
+      contents: [{ parts: [{ text: promptWithToneInstruction }] }],
       config: {
         responseModalities: [Modality.AUDIO],
         speechConfig: {
